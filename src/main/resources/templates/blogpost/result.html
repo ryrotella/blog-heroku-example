@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Ryan's Blog</title>
+    <th:block th:replace="/fragments/styling :: head-style"></th:block>
+  </head>
+  <body>
+  <div th:replace="fragments/navbar :: navbar" ></div>
+  <div class="container">
+  	<div class="row">
+  		<div class="col-md-12">
+  			<div class="panel">
+  				<div class="panel-heading">
+  					<h1 th:text="${title}"></h1>
+  				</div>
+  				<div class="panel-body">
+  					<strong th:text="${author}"></strong>
+					<p th:text="${blogEntry}" />
+					<p th:text="${genre}" />
+  				</div>
+  				<div class="panel-footer">
+  					<!-- Link to Update -->
+					<!-- Link to Show  -->
+					<!--  Link to Destroy -->
+						<a th:href="@{/}"><button class="btn btn-success">Back to Home</button></a> <!-- Back to Home page button -->
+						<a th:href="@{/blog_posts/new}"><button class="btn btn-warning">Create a New Blog Post</button></a>
+  				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:replace="/fragments/styling :: body-links" ></div>
+  </body>
+</html>

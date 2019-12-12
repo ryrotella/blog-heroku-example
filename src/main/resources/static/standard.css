@@ -1,0 +1,36 @@
+body{
+	background-color: #fed8b1;
+}
+
+.container{
+	background-color: #ffffed;
+	margin-top: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 5px; 
+	text-align: center;
+	width: 50%;
+}
+
+h5{
+	margin-top: 10px;
+	margin-bottom: 20px;
+	
+}
+.navbar{
+	background-color: #ffffed;
+}
+.nav.navbar-nav li a{
+	color: black;
+}
+#profileImage{
+	height: 80px;
+	width: 80px;
+	border-radius: 50%;
+	
+}
+
+.genreList{
+	text-align: left;
+}
+

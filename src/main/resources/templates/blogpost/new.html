@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Create a New Blog</title>
+	<th:block th:replace="/fragments/styling :: head-style"></th:block>
+</head>
+	<body>
+	<div th:replace="fragments/navbar :: navbar" ></div>
+	<div class="container">
+	<h1>Create a New Blog Post</h1>
+	<form id="submitNew" action="#" th:action="@{/blog_posts/new}" th:object="${blogPost}" method="post">
+		
+		<div class="form-group">
+	    	<input type="text" class="form-control" placeholder="Blog Title..."  th:field="*{title}" />
+		</div>
+		<div class="form-group">
+	    	<input type="text" class="form-control" placeholder="Your Name Here..." th:field="*{author}" />
+		</div>
+		<div class="form-group">
+	    	<textarea class="form-control" placeholder="Blog Entry" rows="4" th:field="*{blogEntry}"></textarea>
+		</div>
+		<div class="form-group genreList">
+			<div class="form-check radio-inline">
+				<input class="form-check-input" type="radio" name="genre" id="movies" value="Movies" th:field="*{genre}">
+				<label class="form-check-label" for="movies">Movies</label>
+			</div>
+			<div class="form-check radio-inline">
+				<input class="form-check-input" type="radio" name="genre" id="tv" value="TV" th:field="*{genre}">
+				<label class="form-check-label" for="tv">TV</label>
+			</div>
+			<div class="form-check radio-inline">
+				<input class="form-check-input" type="radio" name="genre" id="theatre" value="Theatre" th:field="*{genre}">
+				<label class="form-check-label" for="theatre">Theatre</label>
+			</div>
+			<div class="form-check radio-inline">
+				<input class="form-check-input" type="radio" name="genre" id="videoGames" value="Video Games" th:field="*{genre}">
+				<label class="form-check-label" for="videoGames">Video Games</label>
+			</div>
+			<div class="form-check radio-inline">
+				<input class="form-check-input" type="radio" name="genre" id="books" value="Books" th:field="*{genre}">
+				<label class="form-check-label" for="books">Books</label>
+			</div>
+		</div>
+	    	<button class="btn btn-primary">Submit Your Post</button>
+    
+	</form>
+	</div>
+		
+	<div th:replace="/fragments/styling :: body-links" ></div>
+</body>
+</html>

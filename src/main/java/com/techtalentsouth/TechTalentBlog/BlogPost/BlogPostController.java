@@ -12,12 +12,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.techtalentsouth.TechTalentBlog.Tag.*;
+
 @Controller
 public class BlogPostController {
 	
 	@Autowired
+	TagRepository tagRepository;
+	
+	@Autowired
 	private BlogPostRepository blogPostRepository;
 	private static List<BlogPost> posts = new ArrayList<>();
+	
+	private BlogPostService blogPostService;
 	
 	@GetMapping(value="/")
 	public String index(BlogPost blogPost, Model model) {
@@ -30,6 +37,19 @@ public class BlogPostController {
 		return "blogpost/new";
 	}
 	
+	@GetMapping(value = "/blog_posts/{tag}")
+	public String getPostsByTag(@PathVariable(value="tag") String tag, Model model) {
+	    List<BlogPost> blogPosts = findAllWithTag(tag);
+	    model.addAttribute("postList", blogPosts);
+	    model.addAttribute("tag", tag);
+	    return "blogpost/taggedPosts";
+	}
+	
+	public List<BlogPost> findAllWithTag(String tag){
+	    List<BlogPost> blogPosts = blogPostRepository.findByTags_PhraseOrderByCreatedAtDesc(tag);
+	    return blogPosts;
+	}
+	
 	private BlogPost blogPost;
 	
 	@PostMapping(value="/blog_posts/new")
@@ -38,17 +58,39 @@ public class BlogPostController {
 				blogPost.getTitle(),
 				blogPost.getAuthor(),
 				blogPost.getBlogEntry(),
-				blogPost.getGenre()
+				blogPost.getTagEntry(),
+				blogPost.getGenre() 
 				);
 		
+		handleTags(newPost);
 		blogPostRepository.save(newPost);
 		posts.add(newPost);
 		model.addAttribute("title", blogPost.getTitle());
 		model.addAttribute("author", blogPost.getAuthor());
 		model.addAttribute("blogEntry", blogPost.getBlogEntry());
+		model.addAttribute("tagEntry", blogPost.getTagEntry());
 		model.addAttribute("genre", blogPost.getGenre());
 		return "blogpost/result";
 	}
+	
+	private void handleTags(BlogPost blogPost) {
+        List<Tag> tags = new ArrayList<Tag>(); 
+        String[] toBeTags = blogPost.getTagEntry().split(",");
+        
+       for (String phrase : toBeTags) {
+    	   Tag tag = tagRepository.findByPhrase(phrase);
+    	   if (tag == null) {
+    		   tag = new Tag();
+    		   tag.setPhrase(phrase);
+    		   tagRepository.save(tag);
+    	   }
+    	   tags.add(tag);
+       }
+        	
+        blogPost.setTags(tags);
+    }
+	
+	
 	/*
 	@PostMapping(value= "/blog_posts/edit/{id}")
 	public String edit(@PathVariable Long id, BlogPost blogPost) {

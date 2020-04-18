@@ -26,6 +26,13 @@
 					<p th:text="${blog.blogEntry}"/>
 				</div>
 				<div class="panel-footer">
+					<h4>Tags</h4>
+					<div th:each="tag:${blog.tags}">
+						<a class="tag" th:href="@{/blog_posts/} + ${tag.phrase}"><span th:text="${tag.phrase}"></span></a>
+						             
+					</div>
+				</div>
+				<div class="panel-footer">
 					<span>File Under: </span>
 					<span th:text="${blog.genre}"></span>
 					<!-- Link to Update -->
